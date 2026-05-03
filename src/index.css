@@ -113,10 +113,23 @@
   animation: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@keyframes infinite-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 60s linear infinite;
+}
+
+.animate-infinite-scroll:hover {
+  animation-play-state: paused;
+}
+
 .glow-purple {
-  text-shadow: 0 0 15px rgba(168, 85, 247, 0.5), 
-               0 0 30px rgba(168, 85, 247, 0.3),
-               0 0 50px rgba(168, 85, 247, 0.15);
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.35), 
+               0 0 25px rgba(168, 85, 247, 0.2),
+               0 0 50px rgba(168, 85, 247, 0.1);
 }
 
 .glow-white {
@@ -126,9 +139,10 @@
 }
 
 .hero-glow-container {
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[600px] h-[300px];
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
-  filter: blur(60px);
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[900px] h-[550px];
+  background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 80%);
+  filter: blur(100px);
+  opacity: 1;
 }
 
 .aurora-container {

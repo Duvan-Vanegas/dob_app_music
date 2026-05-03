@@ -9,6 +9,16 @@ import {
   MoreHorizontal
 } from 'lucide-react';
 
+import deiVImg from './assets/dei_v.jpeg';
+import luarLaLImg from './assets/luar_la_l.jpeg';
+import quavoImg from './assets/quavo.png';
+import crisMJImg from './assets/cris_mj.png';
+import badBunnyImg from './assets/bad_bunny.jpg';
+import travisScottImg from './assets/travis_scott.png';
+import mykeTowersImg from './assets/myke_towers.png';
+import eladioCarrionImg from './assets/eladio_carrion.jpeg';
+import moraImg from './assets/mora.png';
+
 const InstagramIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -52,16 +62,15 @@ function App() {
 
   // Artist Data
   const artists = [
-    { name: "Dei V", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" },
-    { name: "Luar la L", image: "https://images.unsplash.com/photo-1493225457124-a1a2a5f590d0?q=80&w=800&auto=format&fit=crop" },
-    { name: "Quavo", image: "https://images.unsplash.com/photo-1601643157091-ce5c665179ab?q=80&w=800&auto=format&fit=crop" },
-    { name: "Cris MJ", image: "https://images.unsplash.com/photo-1520063236750-705d414a3e7a?q=80&w=800&auto=format&fit=crop" },
-    { name: "Bad Bunny", image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop" },
-    { name: "Travis Scott", image: "https://images.unsplash.com/photo-1540039155732-6761b34914a2?q=80&w=800&auto=format&fit=crop" },
-    { name: "Myke Towers", image: "https://images.unsplash.com/photo-1483032469466-b937c425697b?q=80&w=800&auto=format&fit=crop" },
-    { name: "Eladio Carrión", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop" },
-    { name: "Mora", image: "https://images.unsplash.com/photo-1516280440502-a2ceb3eb8dbb?q=80&w=800&auto=format&fit=crop" },
-    { name: "Feid", image: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?q=80&w=800&auto=format&fit=crop" },
+    { name: "Dei V", image: deiVImg },
+    { name: "Luar la L", image: luarLaLImg },
+    { name: "Quavo", image: quavoImg },
+    { name: "Cris MJ", image: crisMJImg },
+    { name: "Bad Bunny", image: badBunnyImg },
+    { name: "Travis Scott", image: travisScottImg },
+    { name: "Myke Towers", image: mykeTowersImg },
+    { name: "Eladio Carrión", image: eladioCarrionImg },
+    { name: "Mora", image: moraImg },
   ];
 
   const handleFileChange = (event) => {
@@ -184,8 +193,10 @@ function App() {
             Productor musical
           </div>
 
-          {/* Background Glow */}
+          {/* Background Ambient Lighting */}
           <div className="hero-glow-container" />
+          <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 -z-10 w-[700px] h-[400px] bg-primary/[0.07] blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2 -z-10 w-[600px] h-[400px] bg-primary/[0.05] blur-[100px] rounded-full pointer-events-none" />
 
           <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black mb-6 tracking-tighter leading-[1.1] uppercase relative">
             <span className="text-white/95 glow-white">DUVAN</span> <span className="text-primary glow-purple">ON THE BEAT</span>
@@ -298,41 +309,44 @@ function App() {
         </section>
       </main>
 
-      {/* Artists Slider Section */}
-      <section className="py-32 relative overflow-hidden bg-black z-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-16">
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white/95 leading-tight">
-            Estilos que definen<br />
-            <span className="text-primary glow-purple">nuestra inspiración</span>
-          </h2>
+      {/* Artists Slider Section (Soundseam Inspired) */}
+      <section className="py-24 relative overflow-hidden bg-black z-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-16 flex justify-center text-center">
+          <p className="max-w-xl text-sm md:text-base text-white/30 font-medium leading-relaxed tracking-wide">
+            Estilos que definen nuestra inspiración
+          </p>
         </div>
 
         <div className="relative w-full overflow-hidden flex">
-          {/* Fade Edges for smooth scroll appearance */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-20 pointer-events-none" />
+          {/* Subtle Side Gradients */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black via-black/50 to-transparent z-30 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black via-black/50 to-transparent z-30 pointer-events-none" />
           
-          <div className="flex w-[200%] animate-infinite-scroll">
-            {/* Render array twice to create a seamless infinite loop */}
+          <div className="flex w-max animate-infinite-scroll gap-8 px-4">
+            {/* Seamless Marquee Loop */}
             {[...artists, ...artists].map((artist, idx) => (
               <div 
                 key={idx} 
-                className="relative w-[280px] md:w-[350px] h-[400px] md:h-[450px] shrink-0 mx-4 rounded-[20px] overflow-hidden group cursor-pointer"
+                className="relative w-[220px] md:w-[260px] h-[400px] md:h-[480px] shrink-0 rounded-2xl overflow-hidden group cursor-pointer bg-[#050505] border border-white/[0.05] transition-all duration-1000 shadow-2xl"
               >
-                {/* Purple Filter Overlays (Base State) */}
-                <div className="absolute inset-0 bg-primary mix-blend-color z-10 group-hover:opacity-0 transition-opacity duration-700 ease-in-out pointer-events-none" />
-                <div className="absolute inset-0 bg-primary/30 mix-blend-multiply z-10 group-hover:opacity-0 transition-opacity duration-700 ease-in-out pointer-events-none" />
+                {/* Minimal Dark Overlay (Moody B&W) */}
+                <div className="absolute inset-0 bg-black/70 z-10 group-hover:bg-black/20 transition-all duration-700 pointer-events-none" />
+                <div className="absolute inset-0 bg-primary/15 mix-blend-color z-10 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
                 
                 {/* Image */}
                 <img 
                   src={artist.image} 
                   alt={artist.name} 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-in-out"
+                  className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-1000 ease-out"
                 />
 
-                {/* Artist Name */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="text-2xl font-black text-white tracking-widest uppercase glow-white">{artist.name}</h3>
+                {/* Floating Minimal Name */}
+                <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center pointer-events-none">
+                  {/* Thin elegant line */}
+                  <div className="w-8 h-[1px] bg-primary/30 group-hover:w-16 group-hover:bg-primary transition-all duration-700 mb-4" />
+                  <h3 className="text-[10px] font-bold text-white/40 tracking-[0.4em] uppercase group-hover:text-white group-hover:tracking-[0.5em] transition-all duration-700">
+                    {artist.name}
+                  </h3>
                 </div>
               </div>
             ))}
