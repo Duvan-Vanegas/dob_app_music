@@ -122,8 +122,24 @@
   animation: infinite-scroll 60s linear infinite;
 }
 
-.animate-infinite-scroll:hover {
+.animate-brand-scroll {
+  animation: infinite-scroll 40s linear infinite;
+}
+
+.animate-infinite-scroll:hover,
+.animate-brand-scroll:hover {
   animation-play-state: paused;
+}
+
+.logo-white {
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+  transition: all 0.5s ease;
+}
+
+.logo-white:hover {
+  opacity: 0.8;
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 
 .glow-purple {

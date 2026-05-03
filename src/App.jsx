@@ -21,6 +21,13 @@ import mykeTowersImg from './assets/myke_towers.png';
 import eladioCarrionImg from './assets/eladio_carrion.jpeg';
 import moraImg from './assets/mora.png';
 
+// Brand Logos
+import adamAudioImg from './assets/marcas/adam_audio.png';
+import arturiaImg from './assets/marcas/arturia.png';
+import audioTechnicaImg from './assets/marcas/audio_technica.png';
+import flStudioImg from './assets/marcas/fl_studio.png';
+import novationImg from './assets/marcas/novation.png';
+
 const InstagramIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -95,6 +102,17 @@ function App() {
     { name: "Mora", image: moraImg },
   ];
 
+  const brands = [
+    { name: "Adam Audio", logo: adamAudioImg, size: "h-24 md:h-44" },
+    { name: "Arturia", logo: arturiaImg, size: "h-20 md:h-40" },
+    { name: "Audio Technica", logo: audioTechnicaImg, size: "h-28 md:h-52" },
+    { name: "FL Studio", logo: flStudioImg, size: "h-32 md:h-60" },
+    { name: "Novation", logo: novationImg, size: "h-7 md:h-10" },
+  ];
+
+  // Altura base (si no se especifica en el objeto brand)
+  const logoHeight = "h-8 md:h-12"; 
+
   const beats = [
     { id: 1, name: "Midnight Rain", bpm: "140", tag: "Trap", price: "$29.99", image: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=400&h=400&auto=format&fit=crop" },
     { id: 2, name: "Neon Dreams", bpm: "95", tag: "Lo-Fi", price: "$24.99", image: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=400&h=400&auto=format&fit=crop" },
@@ -104,11 +122,117 @@ function App() {
     { id: 6, name: "Ice Cold", bpm: "145", tag: "Trap", price: "$29.99", image: "https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=400&h=400&auto=format&fit=crop" },
   ];
 
+  const translations = {
+    ES: {
+      nav: { store: "Tienda", services: "Servicios", contact: "Contacto", login: "LOG IN", signup: "SIGN UP" },
+      hero: { 
+        badge: "Productor musical", 
+        desc: "Producción musical de clase mundial para artistas que exigen excelencia. Ingeniería de sonido de élite y branding sonoro a medida.", 
+        cta: "Explorar Beats", 
+        producing: "Produciendo...", 
+        loadTrack: "Cargar Track Local" 
+      },
+      brands: { badge: "Marcas" },
+      artists: { 
+        badge: "Inspiración", 
+        title: "Nuestra Inspiración", 
+        desc: "Estilos que definen nuestra visión y elevan la calidad de cada producción." 
+      },
+      services: { 
+        badge: "Servicios", 
+        title: "Nuestros Servicios", 
+        desc: "Soluciones integrales para llevar tu talento al siguiente nivel con calidad de estudio profesional.",
+        items: [
+          { title: "Producción & Beat Making", description: "Creación de beats exclusivos y personalizados para tu próximo proyecto, adaptados a tu estilo único." },
+          { title: "Grabación de Voces", description: "Equipamiento de alta gama y acústica tratada para capturar cada matiz de tu interpretación vocal." },
+          { title: "Mezcla & Masterización", description: "Equilibrio sonoro y pulido final para que tu música suene competitiva en todas las plataformas globales." },
+        ]
+      },
+      store: { 
+        badge: "Store", 
+        title: "Explorar Beats", 
+        desc: "Producciones exclusivas diseñadas para elevar tu sonido. Licencias profesionales listas para tu próximo hit." 
+      },
+      pricing: { 
+        badge: "Ofertas", 
+        title: "Planes de Licencia", 
+        desc: "Elige el nivel de libertad que tu proyecto necesita. Calidad profesional garantizada en cada beat.",
+        btn: "Elegir Plan",
+        recommended: "Recomendado",
+        perBeat: "/Beat"
+      },
+      faq: { 
+        badge: "Ayuda", 
+        title: "Preguntas Frecuentes",
+        items: [
+          { question: "¿Cómo recibo mis beats tras la compra?", answer: "Inmediatamente después de completar el pago, recibirás un correo electrónico con los enlaces de descarga para los archivos de audio y el contrato de licencia correspondiente." },
+          { question: "¿Los beats son exclusivos?", answer: "Depende de la licencia que elijas. Las licencias Bronze, Silver y Gold son no exclusivas, mientras que la licencia Platinum otorga derechos de propiedad exclusiva." },
+          { question: "¿Puedo subir mi canción a Spotify?", answer: "Sí, todas nuestras licencias te permiten distribuir tu música en plataformas de streaming como Spotify, Apple Music y YouTube, sujeto a los límites de streams de cada plan." },
+          { question: "¿Qué son los Trackouts o Stems?", answer: "Los Trackouts son las pistas individuales de cada instrumento del beat (batería, bajo, melodías, etc.) por separado, lo que te permite una mezcla y masterización profesional de tu voz con la música." },
+        ]
+      }
+    },
+    EN: {
+      nav: { store: "Store", services: "Services", contact: "Contact", login: "LOG IN", signup: "SIGN UP" },
+      hero: { 
+        badge: "Music Producer", 
+        desc: "World-class music production for artists who demand excellence. Elite sound engineering and bespoke sonic branding.", 
+        cta: "Explore Beats", 
+        producing: "Producing...", 
+        loadTrack: "Load Local Track" 
+      },
+      brands: { badge: "Brands I Use" },
+      artists: { 
+        badge: "Inspiration", 
+        title: "Our Inspiration", 
+        desc: "Styles that define our vision and elevate the quality of every production." 
+      },
+      services: { 
+        badge: "Services", 
+        title: "Our Services", 
+        desc: "Integral solutions to take your talent to the next level with professional studio quality.",
+        items: [
+          { title: "Production & Beat Making", description: "Creation of exclusive and custom beats for your next project, tailored to your unique style." },
+          { title: "Vocal Recording", description: "High-end equipment and treated acoustics to capture every nuance of your vocal performance." },
+          { title: "Mixing & Mastering", description: "Sound balance and final polish to make your music sound competitive on all global platforms." },
+        ]
+      },
+      store: { 
+        badge: "Store", 
+        title: "Explore Beats", 
+        desc: "Exclusive productions designed to elevate your sound. Professional licenses ready for your next hit." 
+      },
+      pricing: { 
+        badge: "Offers", 
+        title: "License Plans", 
+        desc: "Choose the level of freedom your project needs. Professional quality guaranteed in every beat.",
+        btn: "Choose Plan",
+        recommended: "Recommended",
+        perBeat: "/Beat"
+      },
+      faq: { 
+        badge: "Help", 
+        title: "Frequently Asked Questions",
+        items: [
+          { question: "How do I receive my beats after purchase?", answer: "Immediately after completing payment, you will receive an email with download links for the audio files and corresponding license agreement." },
+          { question: "Are the beats exclusive?", answer: "It depends on the license you choose. Bronze, Silver, and Gold licenses are non-exclusive, while the Platinum license grants exclusive ownership rights." },
+          { question: "Can I upload my song to Spotify?", answer: "Yes, all our licenses allow you to distribute your music on streaming platforms like Spotify, Apple Music, and YouTube, subject to each plan's stream limits." },
+          { question: "What are Trackouts or Stems?", answer: "Trackouts are the individual tracks of each instrument in the beat (drums, bass, melodies, etc.) separately, allowing for professional mixing and mastering of your vocals with the music." },
+        ]
+      }
+    }
+  };
+
+  const t = translations[lang];
+
   const plans = [
     { 
       name: "Bronze", 
       price: "$29", 
-      features: [
+      features: lang === 'ES' ? [
+        "MP3 Lease", "100k Streams", "No Exclusivo", "Audio con Tag", 
+        "1 Video Musical", "100% Regalías", "Soporte Básico", "Licencia Estándar"
+      ] : [
         "MP3 Lease", "100k Streams", "Non-Exclusive", "Tagged Audio", 
         "1 Music Video", "100% Royalties", "Basic Support", "Standard License"
       ], 
@@ -117,7 +241,10 @@ function App() {
     { 
       name: "Silver", 
       price: "$49", 
-      features: [
+      features: lang === 'ES' ? [
+        "WAV Lease", "500k Streams", "No Exclusivo", "Audio sin Tag", 
+        "3 Videos Musicales", "100% Regalías", "Soporte Prioritario", "Licencia Premium"
+      ] : [
         "WAV Lease", "500k Streams", "Non-Exclusive", "Untagged Audio", 
         "3 Music Videos", "100% Royalties", "Priority Support", "Premium License"
       ], 
@@ -126,7 +253,10 @@ function App() {
     { 
       name: "Gold", 
       price: "$99", 
-      features: [
+      features: lang === 'ES' ? [
+        "Trackouts (Stems)", "Streams Ilimitados", "Derechos de Ejecución", "Radio Airplay", 
+        "Videos Ilimitados", "100% Regalías", "Soporte VIP 24/7", "Licencia Ilimitada"
+      ] : [
         "Trackouts (Stems)", "Unlimited Streams", "Performance Rights", "Radio Airplay", 
         "Unlimited Videos", "100% Royalties", "24/7 VIP Support", "Unlimited License"
       ], 
@@ -135,8 +265,11 @@ function App() {
     },
     { 
       name: "Platinum", 
-      price: "Custom", 
-      features: [
+      price: lang === 'ES' ? "Personalizado" : "Custom", 
+      features: lang === 'ES' ? [
+        "Derechos Exclusivos", "Propiedad Total", "Transferencia de Copyright", "Producción a Medida", 
+        "Todo Ilimitado", "100% Regalías", "Contacto Directo", "Contrato Legal"
+      ] : [
         "Exclusive Rights", "Full Ownership", "Transfer of Copyright", "Custom Production", 
         "Unlimited Everything", "100% Royalties", "Direct Line Contact", "Legal Contract"
       ], 
@@ -144,17 +277,10 @@ function App() {
     },
   ];
 
-  const faqs = [
-    { question: "¿Cómo recibo mis beats tras la compra?", answer: "Inmediatamente después de completar el pago, recibirás un correo electrónico con los enlaces de descarga para los archivos de audio y el contrato de licencia correspondiente." },
-    { question: "¿Los beats son exclusivos?", answer: "Depende de la licencia que elijas. Las licencias Bronze, Silver y Gold son no exclusivas, mientras que la licencia Platinum otorga derechos de propiedad exclusiva." },
-    { question: "¿Puedo subir mi canción a Spotify?", answer: "Sí, todas nuestras licencias te permiten distribuir tu música en plataformas de streaming como Spotify, Apple Music y YouTube, sujeto a los límites de streams de cada plan." },
-    { question: "¿Qué son los Trackouts o Stems?", answer: "Los Trackouts son las pistas individuales de cada instrumento del beat (batería, bajo, melodías, etc.) por separado, lo que te permite una mezcla y masterización profesional de tu voz con la música." },
-  ];
-
-  const services = [
-    { title: "Producción & Beat Making", description: "Creación de beats exclusivos y personalizados para tu próximo proyecto, adaptados a tu estilo único.", icon: <Play className="w-6 h-6" /> },
-    { title: "Grabación de Voces", description: "Equipamiento de alta gama y acústica tratada para capturar cada matiz de tu interpretación vocal.", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg> },
-    { title: "Mezcla & Masterización", description: "Equilibrio sonoro y pulido final para que tu música suene competitiva en todas las plataformas globales.", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg> },
+  const serviceIcons = [
+    <Play className="w-6 h-6" />,
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>,
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
   ];
 
   const [openFaq, setOpenFaq] = useState(null);
@@ -275,16 +401,16 @@ function App() {
           </div>
 
           <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-            <a href="#store" className="nav-link">Store</a>
-            <a href="#services" className="nav-link">Services</a>
-            <a href="#contact" className="nav-link">Contact</a>
+            <a href="#store" className="nav-link">{t.nav.store}</a>
+            <a href="#services" className="nav-link">{t.nav.services}</a>
+            <a href="#contact" className="nav-link">{t.nav.contact}</a>
           </div>
 
           <div className="flex items-center gap-6">
             {/* Language Toggle */}
             <button 
               onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
-              className="text-[10px] font-bold tracking-wider text-white/50 hover:text-primary transition-colors"
+              className="text-[10px] font-bold tracking-wider text-primary drop-shadow-[0_0_8px_rgba(168,85,247,0.4)] px-3 py-1 bg-primary/10 border border-primary/30 rounded-full transition-all hover:bg-primary/20"
             >
               {lang}
             </button>
@@ -301,10 +427,10 @@ function App() {
             </div>
             
             <button className="text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 ml-2">
-              LOG IN
+              {t.nav.login}
             </button>
             <button className="text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-primary hover:bg-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-              SIGN UP
+              {t.nav.signup}
             </button>
           </div>
         </div>
@@ -325,7 +451,7 @@ function App() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-sm bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-sm h-1.5 w-1.5 bg-primary"></span>
             </span>
-            Productor musical
+            {t.hero.badge}
           </div>
 
           {/* Background Ambient Lighting */}
@@ -344,13 +470,12 @@ function App() {
           </h1>
           
           <p className="max-w-xl text-sm md:text-base text-white/40 font-medium leading-relaxed mb-6 animate-fade-in-up">
-            World-class music production for artists who demand excellence. 
-            Elite sound engineering and bespoke sonic branding.
+            {t.hero.desc}
           </p>
           
           <div className="flex justify-center w-full animate-fade-in-up delay-150 mb-8">
             <a href="#store" className="btn-primary flex items-center gap-3 group">
-              Explorar Beats <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              {t.hero.cta} <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
@@ -384,7 +509,7 @@ function App() {
                       <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                       </svg>
-                      Cargar Track Local
+                      {t.hero.loadTrack}
                       <input 
                         type="file" 
                         accept="audio/*" 
@@ -479,6 +604,37 @@ function App() {
           </div>
         </motion.section>
 
+        {/* Brand Slider Section */}
+        <div className="py-20 relative overflow-hidden h-auto flex flex-col items-center gap-0">
+          <div className="premium-badge-purple">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-sm bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-sm h-1.5 w-1.5 bg-primary"></span>
+            </span>
+            {t.brands.badge}
+          </div>
+          
+          <div className="w-full relative flex items-center h-48 md:h-64 -mt-10">
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          
+          <div className="flex w-max animate-brand-scroll gap-0 items-center px-4">
+            {[...brands, ...brands, ...brands].map((brand, idx) => (
+              <div 
+                key={idx} 
+                className="w-[120px] md:w-[320px] shrink-0 flex items-center justify-center grayscale"
+              >
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className={`max-w-full w-auto ${brand.size || logoHeight} logo-white object-contain`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       </main>
 
       {/* Artists Slider Section (Soundseam Inspired) */}
@@ -491,13 +647,13 @@ function App() {
           className="flex flex-col items-center text-center mb-16 gap-6"
         >
           <div className="flex flex-col items-center">
-            <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Inspiración</span>
+            <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">{t.artists.badge}</span>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-              Nuestra <span className="text-white/20">Inspiración</span>
+              {t.artists.title.split(' ')[0]} <span className="text-white/20">{t.artists.title.split(' ')[1]}</span>
             </h2>
           </div>
           <p className="max-w-md text-white/40 text-sm leading-relaxed">
-            Estilos que definen nuestra visión y elevan la calidad de cada producción.
+            {t.artists.desc}
           </p>
         </motion.div>
 
@@ -550,18 +706,18 @@ function App() {
             className="flex flex-col items-center text-center mb-20 gap-6"
           >
             <div className="flex flex-col items-center">
-              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Servicios</span>
+              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">{t.services.badge}</span>
               <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Nuestros <span className="text-white/20">Servicios</span>
+                {t.services.title.split(' ')[0]} <span className="text-white/20">{t.services.title.split(' ').slice(1).join(' ')}</span>
               </h2>
             </div>
             <p className="max-w-md text-white/40 text-sm leading-relaxed">
-              Soluciones integrales para llevar tu talento al siguiente nivel con calidad de estudio profesional.
+              {t.services.desc}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, i) => (
+            {t.services.items.map((service, i) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 20 }}
@@ -572,7 +728,7 @@ function App() {
               >
                 <div className="text-primary mb-8 group-hover:scale-110 group-hover:text-primary transition-all duration-500 flex items-center">
                   <div className="w-8 h-8 flex items-center justify-center">
-                    {service.icon}
+                    {serviceIcons[i]}
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-white mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
@@ -596,13 +752,13 @@ function App() {
             className="flex flex-col items-center text-center mb-20 gap-6"
           >
             <div className="flex flex-col items-center">
-              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Store</span>
+              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">{t.store.badge}</span>
               <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Explorar <span className="text-white/20">Beats</span>
+                {t.store.title.split(' ')[0]} <span className="text-white/20">{t.store.title.split(' ').slice(1).join(' ')}</span>
               </h2>
             </div>
             <p className="max-w-md text-white/40 text-sm leading-relaxed">
-              Producciones exclusivas diseñadas para elevar tu sonido. Licencias profesionales listas para tu próximo hit.
+              {t.store.desc}
             </p>
           </motion.div>
 
@@ -681,13 +837,13 @@ function App() {
             className="flex flex-col items-center text-center mb-20 gap-6"
           >
             <div className="flex flex-col items-center">
-              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Ofertas</span>
+              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">{t.pricing.badge}</span>
               <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Planes de <span className="text-white/20">Licencia</span>
+                {t.pricing.title.split(' ')[0]} <span className="text-white/20">{t.pricing.title.split(' ').slice(1).join(' ')}</span>
               </h2>
             </div>
             <p className="max-w-md text-white/40 text-sm leading-relaxed">
-              Elige el nivel de libertad que tu proyecto necesita. Calidad profesional garantizada en cada beat.
+              {t.pricing.desc}
             </p>
           </motion.div>
 
@@ -703,7 +859,7 @@ function App() {
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-md shadow-lg shadow-primary/40 z-10">
-                    Recommended
+                    {t.pricing.recommended}
                   </div>
                 )}
                 
@@ -714,7 +870,7 @@ function App() {
                   <h3 className={`text-[9px] font-black uppercase tracking-[0.4em] mb-3 text-white/30 group-hover:text-white/60 transition-colors`}>{plan.name}</h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-black text-white tracking-tighter italic">{plan.price}</span>
-                    {plan.price !== "Custom" && <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">/Beat</span>}
+                    {plan.price !== "Custom" && plan.price !== "Personalizado" && <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{t.pricing.perBeat}</span>}
                   </div>
                 </div>
 
@@ -732,7 +888,7 @@ function App() {
                   ? 'bg-primary text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:bg-primary/90 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]' 
                   : 'bg-white/[0.03] text-white/60 hover:text-white border border-white/[0.05] hover:border-primary/50'
                 }`}>
-                  <span className="relative z-10">Choose Plan</span>
+                  <span className="relative z-10">{t.pricing.btn}</span>
                   {plan.popular && (
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
                   )}
@@ -754,15 +910,15 @@ function App() {
             className="flex flex-col items-center text-center mb-16 gap-6"
           >
             <div className="flex flex-col items-center">
-              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">Ayuda</span>
+              <span className="px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-6 block">{t.faq.badge}</span>
               <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Preguntas <span className="text-white/20">Frecuentes</span>
+                {t.faq.title.split(' ')[0]} <span className="text-white/20">{t.faq.title.split(' ').slice(1).join(' ')}</span>
               </h2>
             </div>
           </motion.div>
 
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
+            {t.faq.items.map((faq, index) => (
               <div 
                 key={index} 
                 className="group relative bg-white/[0.02] hover:bg-white/[0.04] rounded-2xl transition-all duration-500 overflow-hidden"
