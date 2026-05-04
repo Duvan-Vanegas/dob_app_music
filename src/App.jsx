@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   ShoppingCart, 
   ChevronRight, 
+  ChevronLeft,
   Play, 
   Pause,
   Volume2,
   VolumeX,
   Share2,
-  MoreHorizontal
+  MoreHorizontal,
+  Menu,
+  X
 } from 'lucide-react';
 
 import deiVImg from './assets/dei_v.jpeg';
@@ -58,10 +61,60 @@ const TikTokIcon = ({ className }) => (
   </svg>
 );
 
+const PricingCard = ({ plan, i, t }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.1 }}
+      className={`group relative flex-shrink-0 w-[280px] sm:w-[320px] lg:w-full snap-center bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] rounded-3xl p-8 transition-all duration-500 flex flex-col hover:-translate-y-2`}
+    >
+      {plan.popular && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-md shadow-lg shadow-primary/40 z-30">
+          {t.pricing.recommended}
+        </div>
+      )}
+      
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-primary shadow-[0_0_15px_rgba(168,85,247,0.5)] rounded-full opacity-50 group-hover:opacity-100 transition-opacity ${plan.popular ? 'opacity-100 w-32' : ''}`} />
+
+      <div className="mb-8">
+        <h3 className={`text-[9px] font-black uppercase tracking-[0.4em] mb-3 text-white/30 group-hover:text-white/60 transition-colors ${plan.popular ? 'text-primary/80' : ''}`}>{plan.name}</h3>
+        <div className="flex items-baseline gap-1">
+          <span className="text-4xl font-black text-white tracking-tighter italic">{plan.price}</span>
+          {plan.price !== "Custom" && plan.price !== "Personalizado" && <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{t.pricing.perBeat}</span>}
+        </div>
+      </div>
+
+      <div className="space-y-3 mb-10">
+        {plan.features.map((feature, idx) => (
+          <div key={idx} className="flex items-center gap-3 text-[10px] font-medium text-white/40 group-hover:text-white/80 transition-colors">
+            <div className={`w-1 h-1 rounded-full transition-colors shrink-0 ${plan.popular ? 'bg-primary' : 'bg-primary/40 group-hover:bg-primary'}`} />
+            <span className="truncate">{feature}</span>
+          </div>
+        ))}
+      </div>
+
+      <button className={`mt-auto w-full py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 overflow-hidden relative group/btn ${
+        plan.popular
+        ? 'bg-primary text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:bg-primary/90 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]' 
+        : 'bg-white/[0.03] text-white/60 hover:text-white border border-white/[0.05] hover:border-primary/50'
+      }`}>
+        <span className="relative z-10">{t.pricing.btn}</span>
+        {plan.popular && (
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+        )}
+      </button>
+    </motion.div>
+  );
+};
+
 function App() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
+  const pricingRef = useRef(null);
   const [songName, setSongName] = useState(null);
   const [lang, setLang] = useState('ES');
   const audioRef = useRef(null);
@@ -252,7 +305,7 @@ function App() {
         "WAV Lease", "500k Streams", "Non-Exclusive", "Untagged Audio", 
         "3 Music Videos", "100% Royalties", "Priority Support", "Premium License"
       ], 
-      color: "text-slate-300" 
+      color: "text-slate-300"
     },
     { 
       name: "Gold", 
@@ -265,7 +318,7 @@ function App() {
         "Unlimited Videos", "100% Royalties", "24/7 VIP Support", "Unlimited License"
       ], 
       color: "text-yellow-400", 
-      popular: true 
+      popular: true
     },
     { 
       name: "Platinum", 
@@ -297,6 +350,35 @@ function App() {
       setSongName(file.name.replace(/\.[^/.]+$/, ""));
       setIsPlaying(true);
       setShowMenu(false);
+    }
+  };
+  
+  useEffect(() => {
+    // Initial scroll to center the Gold plan on mobile
+    if (pricingRef.current && window.innerWidth < 1024) {
+      setTimeout(() => {
+        const container = pricingRef.current;
+        if (container && container.children[2]) {
+          const goldCard = container.children[2];
+          const scrollPos = goldCard.offsetLeft - (container.clientWidth / 2) + (goldCard.clientWidth / 2);
+          container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        }
+      }, 500);
+    }
+  }, []);
+
+  const scrollPricing = (direction) => {
+    if (pricingRef.current && pricingRef.current.children.length > 0) {
+      const container = pricingRef.current;
+      const card = container.children[0];
+      const cardWidth = card.clientWidth + 24; // width + gap
+      const { scrollLeft } = container;
+      
+      const scrollTo = direction === 'left' 
+        ? scrollLeft - cardWidth 
+        : scrollLeft + cardWidth;
+        
+      container.scrollTo({ left: scrollTo, behavior: 'smooth' });
     }
   };
 
@@ -368,7 +450,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-primary/30 selection:text-white">
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-primary/30 selection:text-white overflow-x-hidden">
       {/* Ambient Background */}
       <div className="aurora-container">
         <div className="aurora-glow-1" />
@@ -397,18 +479,18 @@ function App() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 h-20 flex items-center justify-center px-8 border-b border-white/[0.05] bg-black/40 backdrop-blur-3xl"
+        className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center justify-center px-8 border-b border-white/[0.05] bg-black/40 backdrop-blur-3xl"
       >
-        <div className="w-full max-w-7xl flex items-center justify-between">
-          <div className="h-20 cursor-pointer group flex items-center overflow-visible -ml-24">
+        <div className="w-full max-w-7xl flex items-center justify-between relative">
+          <div className="h-20 cursor-pointer group flex items-center overflow-visible -ml-4 nav:-ml-24">
             <img 
               src={logoMarcaImg} 
               alt="DOB Logo" 
-              className="h-[200px] w-auto group-hover:scale-105 transition-transform duration-300 relative z-50 logo-nav" 
+              className="h-[120px] nav:h-[200px] w-auto group-hover:scale-105 transition-transform duration-300 relative z-50 logo-nav" 
             />
           </div>
 
-          <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden nav:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
             <a href="#store" className="nav-link">{t.nav.store}</a>
             <a href="#services" className="nav-link">{t.nav.services}</a>
             <a href="#contact" className="nav-link">{t.nav.contact}</a>
@@ -434,15 +516,82 @@ function App() {
               )}
             </div>
             
-            <button className="text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 ml-2">
+            <button className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 ml-2">
               {t.nav.login}
             </button>
-            <button className="text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-primary hover:bg-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+            <button className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-primary hover:bg-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
               {t.nav.signup}
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="nav:hidden p-2 text-white/50 hover:text-primary transition-colors relative z-[110]"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </motion.div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[90] bg-black/98 backdrop-blur-3xl nav:hidden flex flex-col items-center justify-center gap-8"
+          >
+            <div className="flex flex-col items-center gap-8">
+              <a 
+                href="#store" 
+                className="text-3xl font-black tracking-tighter hover:text-primary transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t.nav.store}
+              </a>
+              <a 
+                href="#services" 
+                className="text-3xl font-black tracking-tighter hover:text-primary transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t.nav.services}
+              </a>
+              <a 
+                href="#contact" 
+                className="text-3xl font-black tracking-tighter hover:text-primary transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t.nav.contact}
+              </a>
+            </div>
+            
+            <div className="flex flex-col items-center gap-4 mt-8 w-full px-12">
+              <button className="w-full text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-white/5 border border-white/10">
+                {t.nav.login}
+              </button>
+              <button className="w-full text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-primary shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+                {t.nav.signup}
+              </button>
+            </div>
+
+            {/* Mobile Socials */}
+            <div className="flex gap-8 mt-12">
+              <a href="https://www.instagram.com/duvanonthebeat" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-primary transition-colors">
+                <InstagramIcon className="w-6 h-6" />
+              </a>
+              <a href="https://www.youtube.com/@duvanonthebeat" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-primary transition-colors">
+                <YoutubeIcon className="w-6 h-6" />
+              </a>
+              <a href="https://www.tiktok.com/@duvanonthebeat" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-primary transition-colors">
+                <TikTokIcon className="w-6 h-6" />
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col pt-10">
@@ -464,10 +613,8 @@ function App() {
 
           {/* Background Ambient Lighting */}
           <div className="hero-glow-container" />
-          <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 -z-10 w-[700px] h-[400px] bg-primary/[0.07] blur-[120px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2 -z-10 w-[600px] h-[400px] bg-primary/[0.05] blur-[100px] rounded-full pointer-events-none" />
 
-          <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-black mb-6 tracking-tighter leading-[1.1] uppercase relative min-h-[1.1em]">
+          <h1 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black mb-6 tracking-tighter leading-[1.1] uppercase relative min-h-[1.1em]">
             <span className="text-white/95 glow-white">
               {typedTitle.slice(0, 5)}
             </span>
@@ -488,7 +635,7 @@ function App() {
           </div>
 
           {/* Audio Player */}
-          <div className="apple-player animate-fade-in-up delay-300">
+          <div className="apple-player animate-fade-in-up delay-300 w-full max-w-lg">
             {/* macOS Window Header */}
             <div className="apple-player-header justify-between">
               <div className="flex gap-2">
@@ -530,7 +677,7 @@ function App() {
               </div>
             </div>
             
-            <div className="p-5 flex flex-col gap-3 relative">
+            <div className="p-5 flex flex-col gap-3 relative overflow-hidden">
               {/* Subtle Texture Lines */}
               <div className="absolute inset-0 pointer-events-none opacity-[0.03] overflow-hidden">
                 <div className="w-full h-full" style={{ backgroundImage: 'linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent)', backgroundSize: '40px 40px' }} />
@@ -540,7 +687,7 @@ function App() {
                 <audio ref={audioRef} src={audioUrl} onEnded={() => setIsPlaying(false)} className="hidden" />
               )}
 
-              <div className="flex items-center gap-6 relative z-10 px-8">
+              <div className="flex items-center gap-2 md:gap-6 relative z-10 px-2 md:px-8">
                 {/* Play Button on Left - Floating Style */}
                 <button 
                   onClick={togglePlay}
@@ -554,10 +701,10 @@ function App() {
                 </button>
 
                 <div 
-                  className="waveform-container !px-0 flex-1 cursor-pointer group/wave" 
+                  className="waveform-container !px-0 flex-1 cursor-pointer group/wave overflow-hidden" 
                   onClick={togglePlay}
                 >
-                  {bars.map((height, i) => (
+                  {bars.slice(0, 40).map((height, i) => (
                     <div 
                       key={i} 
                       className="waveform-bar bg-primary opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
@@ -731,15 +878,15 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group relative bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] rounded-2xl p-10 transition-all duration-500"
+                className={`group relative bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] rounded-2xl p-10 transition-all duration-500 ${i === 2 ? 'md:col-span-2 lg:col-span-1 md:max-w-[calc(50%-12px)] md:mx-auto lg:max-w-none lg:mx-0' : ''}`}
               >
-                <div className="text-primary mb-8 group-hover:scale-110 group-hover:text-primary transition-all duration-500 flex items-center">
+                <div className={`text-primary mb-8 group-hover:scale-110 group-hover:text-primary transition-all duration-500 flex items-center ${i === 2 ? 'md:justify-center lg:justify-start' : ''}`}>
                   <div className="w-8 h-8 flex items-center justify-center">
                     {serviceIcons[i]}
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
-                <p className="text-sm text-white/30 leading-relaxed group-hover:text-white/50 transition-colors">
+                <h3 className={`text-lg font-bold text-white mb-4 group-hover:text-primary transition-colors ${i === 2 ? 'md:text-center lg:text-left' : ''}`}>{service.title}</h3>
+                <p className={`text-sm text-white/30 leading-relaxed group-hover:text-white/50 transition-colors ${i === 2 ? 'md:text-center lg:text-left' : ''}`}>
                   {service.description}
                 </p>
               </motion.div>
@@ -854,54 +1001,50 @@ function App() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {plans.map((plan, i) => (
-              <motion.div 
-                key={plan.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className={`group relative bg-gradient-to-b from-white/[0.03] to-transparent border ${plan.popular ? 'border-primary/50 shadow-[0_20px_50px_rgba(168,85,247,0.1)]' : 'border-white/[0.05]'} rounded-2xl p-8 transition-all duration-700 flex flex-col hover:-translate-y-2 hover:bg-white/[0.05]`}
+          <div className="relative group/pricing px-4 md:px-0">
+            {/* Side Navigation Buttons - Floating Icons */}
+            <button 
+              onClick={() => scrollPricing('left')}
+              className="absolute -left-2 md:-left-12 top-[40%] -translate-y-1/2 z-40 p-4 text-primary/40 hover:text-primary transition-all opacity-0 group-hover/pricing:opacity-100 hidden md:flex items-center justify-center group/btn-left"
+            >
+              <ChevronLeft className="w-8 h-8 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)] group-hover/btn-left:scale-110 transition-transform" />
+            </button>
+            <button 
+              onClick={() => scrollPricing('right')}
+              className="absolute -right-2 md:-right-12 top-[40%] -translate-y-1/2 z-40 p-4 text-primary/40 hover:text-primary transition-all opacity-0 group-hover/pricing:opacity-100 hidden md:flex items-center justify-center group/btn-right"
+            >
+              <ChevronRight className="w-8 h-8 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)] group-hover/btn-right:scale-110 transition-transform" />
+            </button>
+
+            {/* Mobile Buttons (Floating Icons) */}
+            <div className="absolute inset-x-0 top-[40%] -translate-y-1/2 flex justify-between px-2 z-40 pointer-events-none md:hidden">
+              <button 
+                onClick={() => scrollPricing('left')}
+                className="p-4 text-primary pointer-events-auto active:scale-90 transition-all"
               >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-md shadow-lg shadow-primary/40 z-10">
-                    {t.pricing.recommended}
-                  </div>
-                )}
-                
-                {/* Top Accent Line */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-[2px] bg-primary shadow-[0_0_15px_rgba(168,85,247,0.5)] rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
+                <ChevronLeft className="w-7 h-7 drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]" />
+              </button>
+              <button 
+                onClick={() => scrollPricing('right')}
+                className="p-4 text-primary pointer-events-auto active:scale-90 transition-all"
+              >
+                <ChevronRight className="w-7 h-7 drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]" />
+              </button>
+            </div>
 
-                <div className="mb-8">
-                  <h3 className={`text-[9px] font-black uppercase tracking-[0.4em] mb-3 text-white/30 group-hover:text-white/60 transition-colors`}>{plan.name}</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white tracking-tighter italic">{plan.price}</span>
-                    {plan.price !== "Custom" && plan.price !== "Personalizado" && <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{t.pricing.perBeat}</span>}
-                  </div>
-                </div>
-
-                <div className="space-y-3 mb-10">
-                  {plan.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-[10px] font-medium text-white/40 group-hover:text-white/80 transition-colors">
-                      <div className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors shrink-0" />
-                      {feature}
-                    </div>
-                  ))}
-                </div>
-
-                <button className={`mt-auto w-full py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 overflow-hidden relative group/btn ${
-                  plan.popular 
-                  ? 'bg-primary text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:bg-primary/90 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]' 
-                  : 'bg-white/[0.03] text-white/60 hover:text-white border border-white/[0.05] hover:border-primary/50'
-                }`}>
-                  <span className="relative z-10">{t.pricing.btn}</span>
-                  {plan.popular && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
-                  )}
-                </button>
-              </motion.div>
-            ))}
+            <div 
+              ref={pricingRef}
+              className="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-6 pb-12 pt-8 snap-x snap-mandatory no-scrollbar"
+            >
+              {plans.map((plan, i) => (
+                <PricingCard 
+                  key={plan.name} 
+                  plan={plan} 
+                  i={i} 
+                  t={t}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

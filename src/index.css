@@ -7,6 +7,7 @@
   --color-primary-light: #d8b4fe;
   --font-medieval: "Inter", sans-serif; 
   --font-sans: "Inter", sans-serif;
+  --breakpoint-nav: 980px;
 }
 
 @layer base {
@@ -150,6 +151,19 @@
 .group:hover .logo-nav {
   @apply opacity-100;
   filter: invert(43%) sepia(91%) saturate(2811%) hue-rotate(248deg) brightness(98%) contrast(98%) drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.plan-emphasis {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.4) !important;
 }
 
 .glow-purple {
