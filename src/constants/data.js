@@ -114,7 +114,7 @@ export const translations = {
       producing: "Producing...", 
       loadTrack: "Load Local Track" 
     },
-    brands: { badge: "Brands I Use" },
+    brands: { badge: "Brands" },
     artists: { 
       badge: "Inspiration", 
       title: "Our Inspiration", 
