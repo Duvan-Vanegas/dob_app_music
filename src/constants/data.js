@@ -45,7 +45,7 @@ export const beats = [
 
 export const translations = {
   ES: {
-    nav: { store: "Tienda", services: "Servicios", contact: "Contacto", login: "LOG IN", signup: "SIGN UP" },
+    nav: { store: "Tienda", services: "Servicios", contact: "Contacto", login: "INICIAR SESIÓN", signup: "REGISTRARSE" },
     hero: { 
       badge: "Productor musical", 
       desc: "Producción musical de clase mundial para artistas que exigen excelencia. Ingeniería de sonido de élite y branding sonoro a medida.", 

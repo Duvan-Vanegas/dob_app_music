@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { InstagramIcon, YoutubeIcon, TikTokIcon } from '../ui/Icons';
 import logoMarcaImg from '../../assets/logo_marca/marca_dob.png';
@@ -66,12 +67,12 @@ const Navbar = ({
               )}
             </div>
             
-            <button className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 ml-2">
+            <Link to="/login" className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 ml-2">
               {t.nav.login}
-            </button>
-            <button className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-primary hover:bg-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+            </Link>
+            <Link to="/register" className="hidden nav:block text-[10px] font-bold tracking-widest text-white px-5 py-2 rounded-md bg-primary hover:bg-primary/80 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
               {t.nav.signup}
-            </button>
+            </Link>
 
             <button 
               className="nav:hidden p-2 text-white/50 hover:text-primary transition-colors relative z-[110]"
@@ -99,8 +100,8 @@ const Navbar = ({
               <a href="#contact" className="text-3xl font-black tracking-tighter hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>{t.nav.contact}</a>
             </div>
             <div className="flex flex-col items-center gap-4 mt-8 w-full px-12">
-              <button className="w-full text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-white/5 border border-white/10">{t.nav.login}</button>
-              <button className="w-full text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-primary shadow-[0_0_15px_rgba(168,85,247,0.4)]">{t.nav.signup}</button>
+              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full flex justify-center text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-white/5 border border-white/10 transition-all duration-300">{t.nav.login}</Link>
+              <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full flex justify-center text-xs font-bold tracking-widest text-white px-5 py-4 rounded-xl bg-primary shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all duration-300">{t.nav.signup}</Link>
             </div>
             <div className="flex gap-8 mt-12">
               <a href="https://www.instagram.com/duvanonthebeat" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-primary transition-colors"><InstagramIcon className="w-6 h-6" /></a>
