@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-background: #000000;
+  --color-primary: #a855f7; 
+  --color-primary-light: #d8b4fe;
+  --font-medieval: "Inter", sans-serif; 
+  --font-sans: "Inter", sans-serif;
+  --breakpoint-nav: 980px;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans antialiased selection:bg-primary/30;
+    margin: 0;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glow-text {
+    @apply text-white font-black tracking-tighter;
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
+  }
+
+  .glow-purple {
+    filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.8));
+  }
+  
+  .nav-link {
+    @apply text-[14px] font-medium text-white/50 hover:text-primary transition-all duration-300 px-4 py-2;
+  }
+  
+  .btn-primary {
+    @apply relative px-8 py-3.5 bg-primary text-white rounded-xl font-bold text-[15px] tracking-tight;
+    @apply transition-all duration-300;
+    @apply hover:bg-primary/80 active:scale-[0.98];
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+  }
+
+  .premium-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.08];
+    @apply text-[10px] font-bold tracking-[0.05em] text-white/70 backdrop-blur-xl uppercase;
+    @apply hover:border-primary/50 hover:bg-white/[0.08] transition-all duration-500 cursor-default;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .premium-badge-purple {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/10 border border-primary/30;
+    @apply text-[10px] font-bold tracking-[0.05em] text-primary backdrop-blur-xl uppercase;
+    @apply hover:bg-primary/20 transition-all duration-500 cursor-default;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Apple System Window Controls */
+.apple-dot {
+  @apply w-[13px] h-[13px] rounded-full relative overflow-hidden flex items-center justify-center;
+}
+
+.apple-dot::after {
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none;
+}
+
+.dot-purple { @apply bg-primary border border-[#8b40cc]; }
+
+/* Apple System Audio Player Styles */
+.apple-player {
+  @apply relative w-full max-w-2xl p-0 flex flex-col overflow-hidden;
+  @apply bg-white/[0.01] backdrop-blur-[40px] rounded-xl transition-all duration-700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.apple-player-header {
+  @apply flex items-center px-5 py-4 border-b border-white/[0.05] bg-white/[0.04];
+}
+
+.waveform-container {
+  @apply flex items-center justify-between h-20 w-full px-8 py-2;
+}
+
+.waveform-bar {
+  @apply w-[3px] rounded-full transition-all duration-700;
+}
+
+.waveform-bar.active {
+  @apply bg-primary;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+.waveform-bar.inactive {
+  @apply bg-white/[0.15];
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes infinite-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 60s linear infinite;
+}
+
+.animate-brand-scroll {
+  animation: infinite-scroll 40s linear infinite;
+}
+
+.animate-infinite-scroll:hover,
+.animate-brand-scroll:hover {
+  animation-play-state: paused;
+}
+
+.logo-white {
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+  transition: all 0.5s ease;
+}
+
+.logo-white:hover {
+  opacity: 0.8;
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.logo-nav {
+  @apply opacity-50 transition-all duration-300;
+  filter: brightness(0) invert(1);
+}
+
+.group:hover .logo-nav {
+  @apply opacity-100;
+  filter: invert(43%) sepia(91%) saturate(2811%) hue-rotate(248deg) brightness(98%) contrast(98%) drop-shadow(0 0 15px rgba(168, 85, 247, 0.4));
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.plan-emphasis {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+.glow-purple {
+  text-shadow: 0 0 25px rgba(168, 85, 247, 0.2), 
+               0 0 50px rgba(168, 85, 247, 0.1);
+}
+
+.glow-white {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 
+               0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.hero-glow-container {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-[900px] h-[550px];
+  background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 80%);
+  filter: blur(100px);
+  opacity: 1;
+}
+
+.aurora-container {
+  @apply fixed inset-0 overflow-hidden pointer-events-none -z-10;
+}
+
+.aurora-glow-1 {
+  @apply absolute top-[-30%] left-[-20%] w-[100%] h-[100%] rounded-full;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 60%);
+  filter: blur(150px);
+  animation: float 25s infinite ease-in-out;
+}
+
+.aurora-glow-2 {
+  @apply absolute bottom-[-30%] right-[-20%] w-[100%] h-[100%] rounded-full;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+  filter: blur(150px);
+  animation: float 30s infinite ease-in-out reverse;
+}
+
+.aurora-glow-3 {
+  @apply absolute top-[15%] left-1/2 -translate-x-1/2 w-[80%] h-[60%] rounded-full;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+  filter: blur(180px);
+  animation: pulse 15s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0.7; transform: translate(-50%, 8%) scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(5%, 5%) rotate(5deg); }
+  66% { transform: translate(-3%, 7%) rotate(-3deg); }
+}
