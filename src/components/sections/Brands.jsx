@@ -17,9 +17,9 @@ const Brands = ({ t }) => {
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
       
-        <div className="flex w-max animate-brand-scroll gap-0 items-center px-4">
+        <div className="flex w-max animate-brand-scroll gap-2 md:gap-6 items-center px-4">
           {[...brands, ...brands, ...brands].map((brand, idx) => (
-            <div key={idx} className="w-[120px] md:w-[320px] shrink-0 flex items-center justify-center grayscale">
+            <div key={idx} className={`${brand.containerClass || "w-[160px] md:w-[220px]"} shrink-0 flex items-center justify-center grayscale`}>
               <img src={brand.logo} alt={brand.name} className={`max-w-full w-auto ${brand.size || logoHeight} logo-white object-contain`} />
             </div>
           ))}

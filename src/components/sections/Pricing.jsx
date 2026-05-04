@@ -9,7 +9,7 @@ const PricingCard = ({ plan, i, t }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: i * 0.1 }}
-      className={`group relative flex-shrink-0 w-[80vw] sm:w-[280px] lg:w-[290px] min-[1600px]:w-full snap-center bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] rounded-2xl p-5 md:p-6 transition-all duration-500 flex flex-col hover:-translate-y-2`}
+      className={`group relative flex-shrink-0 w-[270px] sm:w-[280px] lg:w-[290px] min-[1600px]:w-full snap-center bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.05] rounded-2xl p-5 md:p-6 transition-all duration-500 flex flex-col hover:-translate-y-2`}
     >
       {plan.popular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary text-white text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] rounded-md shadow-lg shadow-primary/40 z-30">

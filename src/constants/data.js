@@ -30,7 +30,7 @@ export const brands = [
   { name: "Adam Audio", logo: adamAudioImg, size: "h-24 md:h-44" },
   { name: "Arturia", logo: arturiaImg, size: "h-20 md:h-40" },
   { name: "Audio Technica", logo: audioTechnicaImg, size: "h-28 md:h-52" },
-  { name: "FL Studio", logo: flStudioImg, size: "h-32 md:h-60" },
+  { name: "FL Studio", logo: flStudioImg, size: "h-32 md:h-60 scale-[1.6]", containerClass: "w-[160px] md:w-[220px] overflow-hidden h-full" },
   { name: "Novation", logo: novationImg, size: "h-7 md:h-10" },
 ];
 
