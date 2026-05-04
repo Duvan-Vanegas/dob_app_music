@@ -27,6 +27,7 @@ import arturiaImg from './assets/marcas/arturia.png';
 import audioTechnicaImg from './assets/marcas/audio_technica.png';
 import flStudioImg from './assets/marcas/fl_studio.png';
 import novationImg from './assets/marcas/novation.png';
+import logoMarcaImg from './assets/logo_marca/marca_dob.png';
 
 const InstagramIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -79,13 +80,16 @@ function App() {
   useEffect(() => {
     let currentIdx = 0;
     const interval = setInterval(() => {
-      if (currentIdx <= fullTitle.length) {
-        setTypedTitle(fullTitle.slice(0, currentIdx));
-        currentIdx++;
-      } else {
-        clearInterval(interval);
+      setTypedTitle(fullTitle.slice(0, currentIdx));
+      currentIdx++;
+      
+      if (currentIdx > fullTitle.length) {
+        // Optional: wait a bit before restarting
+        setTimeout(() => {
+          currentIdx = 0;
+        }, 2000); 
       }
-    }, 100); // 100ms per character for a premium feel
+    }, 100);
     return () => clearInterval(interval);
   }, []);
 
@@ -374,15 +378,15 @@ function App() {
 
       {/* Floating Social Icons */}
       <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-5 animate-fade-in-up delay-500">
-        <a href="#" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
+        <a href="https://www.instagram.com/duvanonthebeat" target="_blank" rel="noopener noreferrer" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
           <span className="absolute right-full mr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">Instagram</span>
           <InstagramIcon className="w-5 h-5 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all" />
         </a>
-        <a href="#" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
+        <a href="https://www.youtube.com/@duvanonthebeat" target="_blank" rel="noopener noreferrer" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
           <span className="absolute right-full mr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">YouTube</span>
           <YoutubeIcon className="w-5 h-5 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all" />
         </a>
-        <a href="#" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
+        <a href="https://www.tiktok.com/@duvanonthebeat" target="_blank" rel="noopener noreferrer" className="p-2.5 text-white/30 hover:text-primary hover:-translate-y-1 transition-all duration-300 group relative flex items-center justify-center">
           <span className="absolute right-full mr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">TikTok</span>
           <TikTokIcon className="w-5 h-5 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.5)] transition-all" />
         </a>
@@ -396,8 +400,12 @@ function App() {
         className="fixed top-0 left-0 right-0 z-50 h-20 flex items-center justify-center px-8 border-b border-white/[0.05] bg-black/40 backdrop-blur-3xl"
       >
         <div className="w-full max-w-7xl flex items-center justify-between">
-          <div className="text-xl font-black tracking-[0.3em] text-white/50 hover:text-primary transition-all duration-300 cursor-pointer">
-            DOB
+          <div className="h-20 cursor-pointer group flex items-center overflow-visible -ml-24">
+            <img 
+              src={logoMarcaImg} 
+              alt="DOB Logo" 
+              className="h-[200px] w-auto group-hover:scale-105 transition-transform duration-300 relative z-50" 
+            />
           </div>
 
           <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
@@ -410,7 +418,7 @@ function App() {
             {/* Language Toggle */}
             <button 
               onClick={() => setLang(lang === 'ES' ? 'EN' : 'ES')}
-              className="text-[10px] font-bold tracking-wider text-primary drop-shadow-[0_0_8px_rgba(168,85,247,0.4)] px-3 py-1 bg-primary/10 border border-primary/30 rounded-full transition-all hover:bg-primary/20"
+              className="text-[10px] font-bold tracking-wider text-primary drop-shadow-[0_0_8px_rgba(168,85,247,0.4)] px-3 py-1 bg-primary/10 border border-primary/30 rounded-md transition-all hover:bg-primary/20"
             >
               {lang}
             </button>
@@ -667,7 +675,6 @@ function App() {
             {[...artists, ...artists].map((artist, idx) => (
               <motion.div 
                 key={idx} 
-                whileHover={{ y: -10, scale: 1.02 }}
                 className="relative w-[220px] md:w-[260px] h-[400px] md:h-[480px] shrink-0 rounded-2xl overflow-hidden group cursor-pointer bg-[#050505] border border-white/[0.05] transition-all duration-1000 shadow-2xl"
               >
                 {/* Minimal Dark Overlay (Moody B&W) */}
@@ -678,7 +685,7 @@ function App() {
                 <img 
                   src={artist.image} 
                   alt={artist.name} 
-                  className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-1000 ease-out"
+                  className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
                 />
 
                 {/* Floating Minimal Name */}
